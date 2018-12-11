@@ -5,7 +5,7 @@ class ParkingLot {
     private final List<Parkable> parkables;
 
     ParkingLot() {
-        this.parkables = new ArrayList<>(  );
+        this.parkables = new ArrayList<>();
     }
 
     void park(Parkable parkable) {
@@ -16,7 +16,10 @@ class ParkingLot {
         return parkables.contains( parkable );
     }
 
-    void unPark(Parkable parkable) {
+    void unPark(Parkable parkable) throws ParkableNotFoundException {
+        if (!contains( parkable )) {
+            throw new ParkableNotFoundException();
+        }
         parkables.remove( parkable );
     }
 }

@@ -1,13 +1,19 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingLotTest {
+
+    private ParkingLot parkingLot;
+    @BeforeEach
+    void setUp() {
+        parkingLot = new ParkingLot();
+    }
+
     @Test
     void shouldParkAVehicle(){
         Parkable parkable = new Parkable(){};
-        ParkingLot parkingLot = new ParkingLot();
         parkingLot.park(parkable);
         assertTrue(parkingLot.contains(parkable));
     }
@@ -15,9 +21,16 @@ class ParkingLotTest {
     @Test
     void shouldUnParkAParkedVehicle(){
         Parkable parkable = new Parkable(){};
-        ParkingLot parkingLot = new ParkingLot();
         parkingLot.park(parkable);
         parkingLot.unPark(parkable);
         assertFalse(parkingLot.contains(parkable));
     }
+
+    @Test
+    void shouldThrowAnExceptionWhenUnparkAVehicleThatIsNotParked(){
+        Parkable parkable = new Parkable() {};
+        assertThrows(ParkableNotFoundException.class, ()->
+        parkingLot.unPark( parkable ));
+    }
+
 }
